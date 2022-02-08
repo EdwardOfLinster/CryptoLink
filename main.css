@@ -1,0 +1,218 @@
+#wrapper{
+  overflow-x: hidden;
+  max-width: 100%;
+}
+body{
+  font-family: 'open-sans', sans-serif;
+  font-size: 12px;
+}
+header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 10px;
+}
+h1{
+  font-weight: 700 !important;
+}
+@media (min-width: 576px){
+
+}
+header img{
+  height: 50px !important;
+}
+main{
+  margin: 0 auto;
+}
+main a{
+  text-decoration: none;
+  color: black;
+}
+main a:hover{
+  background: lightgrey;
+  border-radius: 3px;
+}
+#error{
+  display: none;
+}
+.coin-icon{
+  height: 35px;
+  width: 35px;
+}
+@media (min-width:768px){
+  main{
+    width: 80%;
+  }
+  .coin-icon{
+    height: 40px;
+    width: 40px;
+  }
+  p{
+    font-size: 18px !important;
+  }
+}
+@media (min-width:992px){
+  main{
+    width: 70%;
+  }
+  p{
+    font-size: 20px !important;
+  }
+  .coin-icon{
+    height: 50px;
+    width: 50px;
+  }
+}
+@media (min-width:1200px){
+  main{
+    width: 60%;
+  }
+  header img{
+    height: 60px !important;
+  }
+}
+/* h1{
+  font-size: 16px !important;
+} */
+.line-h-1{
+  line-height: 1;
+}
+.ml-1{
+  margin-left: 5px;
+}
+.bold{
+  font-weight: 700;
+}
+.crypto-list{
+  padding: 0 5%;
+}
+.crypto-item{
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border-top: 1px solid black;
+}
+.crypto-branding{
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+  text-align: left;
+}
+.crypto-logo img{
+  height: 32px;
+  width: 32px;
+  flex-basis: auto;
+}
+.crypto-id{
+  margin-left: 4px;
+  font-size: 14px;
+}
+.crypto-symbol{
+  font-weight: 800;
+}
+
+.crypto-price{
+  flex-basis: 25%;
+  text-align: center;
+
+}
+.crypto-change{
+  flex-basis: 25%;
+  text-align: right;
+}
+
+
+.module{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 75px);
+  margin-top: 75px;
+  background: grey;
+  padding: 50px 20px;
+  z-index: 1;
+  display: none;
+}
+.module .close{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 20px;
+  font-weight: 800;
+  background: red;
+  border-bottom-left-radius: 20px;
+}
+.module img{
+  width: 50%;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 10px;
+}
+.module h4{
+  text-align: center;
+  font-size: 16px;
+}
+.module h3{
+  text-align: center;
+  font-size: 22px;
+}
+.module .row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+h5{
+  font-size: 14px;
+}
+.row p{
+  font-size: 14px;
+}
+.pr-1{
+  padding-right: 4px;
+}
+.change{
+  text-align: right;
+}
+.marketcap{
+  margin-top: 15px;
+}
+.hilow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+canvas{
+  margin-top: 15px;
+  width: 100%;
+}
+
+.buylink{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+.buylink a{
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 15px;
+  display: inline-block;
+  background: #eee;
+  border-radius: 5px;
+  color: black;
+  font-weight: 700;
+}
+.show{
+  display: inline;
+}
