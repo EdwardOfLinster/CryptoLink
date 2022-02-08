@@ -4,8 +4,8 @@ function search(){
   var filter=document.getElementById("search").value;
   var baseUrl="https://api.coinranking.com/v2/coins";
   var apiKey="coinranking14cf77305ede45fab52e47ad5028ae770f87b7dafe3999a6";
-  var proxy = "https://cors-anywhere.herokuapp.com/"
-  fetch(`${proxy}${baseUrl}${filter}`,{method:'GET',headers:{'Content-Type':'application/json','x-access-token':`${apiKey}`,}}).then((response)=>{if(response.ok){response.json().then((json)=>{coinsData=json.data.coins;if(coinsData.length>0){var cryptoCoin="";document.getElementById("error").style.display="none";}
+//   var proxy = "https://cors-anywhere.herokuapp.com/"
+  fetch(`${baseUrl}${filter}`,{method:'GET',headers:{'Content-Type':'application/json','x-access-token':`${apiKey}`,}}).then((response)=>{if(response.ok){response.json().then((json)=>{coinsData=json.data.coins;if(coinsData.length>0){var cryptoCoin="";document.getElementById("error").style.display="none";}
 else{document.getElementById("error").style.display="flex";}
 coinsData.forEach((coin)=>{cryptoCoin+=`<a cryptoSymbol="${coin.symbol}" cryptoName="${coin.name}" type="button" class="d-flex align-items-center justify-content-between gap-3 py-3 px-3" data-bs-toggle="modal" data-bs-target="#${coin.symbol}Modal" data-coin-symbol="${coin.symbol}" data-coin-data='${JSON.stringify(coin.sparkline)}'>
                             <div class="col-4 d-flex align-items-center">
