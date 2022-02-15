@@ -1,25 +1,31 @@
 var myChart;
-
 function search() {
-    //   var filter = document.getElementById("search").value;
-    var baseUrl = "https://api.coinranking.com/v2/coins";
-    var apiKey = "coinranking14cf77305ede45fab52e47ad5028ae770f87b7dafe3999a6";
-
-    fetch(`${baseUrl}?x-access-token=${apiKey}`)
-        .then(async (rawResponse) => {
-                const response = await rawResponse.json();
-
-                if (response.status === 'success') {
-                    coinsData = response.data.coins;
-                    if (coinsData.length > 0) {
-                        var cryptoCoin = "";
-                        document.getElementById("error").style.display = "none";
-                    } else {
-                        document.getElementById("error").style.display = "flex";
-                    }
-                    coinsData.forEach((coin) => {
-                        // let coinPrice = coin.price
-                        cryptoCoin += `<a cryptoSymbol="${coin.symbol}" cryptoName="${coin.name}" type="button" class="d-flex align-items-center justify-content-between gap-3 py-3 px-3" data-bs-toggle="modal" data-bs-target="#${coin.symbol}Modal" data-coin-symbol="${coin.symbol}" data-coin-data='${JSON.stringify(coin.sparkline)}'>
+//   var filter = document.getElementById("search").value;
+  var baseUrl = "https://api.coinranking.com/v2/coins";
+  var apiKey = "coinranking14cf77305ede45fab52e47ad5028ae770f87b7dafe3999a6";
+  fetch('https://cryptolink.edwardlin.ca/response.json', { 
+//   fetch(`${baseUrl}${filter}`, { 
+    method: 'GET',
+    // headers: {
+    //   'Content-Type': 'application/json',
+    //   'x-access-token': `${apiKey}`,
+    //   'Access-Control-Allow-Origin': 'https://cryptolink.edwardlin.ca/'
+    // }
+})
+  .then((response) => {
+    if (response.ok) {
+      response.json().then((json) => {
+        coinsData = json.data.coins;
+        if (coinsData.length > 0) {
+          var cryptoCoin = "";
+          document.getElementById("error").style.display = "none";
+        }
+        else{
+          document.getElementById("error").style.display = "flex";
+        }
+        //For Loop Starts
+        coinsData.forEach((coin) => {
+          cryptoCoin += `<a cryptoSymbol="${coin.symbol}" cryptoName="${coin.name}" type="button" class="d-flex align-items-center justify-content-between gap-3 py-3 px-3" data-bs-toggle="modal" data-bs-target="#${coin.symbol}Modal" data-coin-symbol="${coin.symbol}" data-coin-data='${JSON.stringify(coin.sparkline)}'>
                             <div class="col-4 d-flex align-items-center">
                                 <img src="${coin.iconUrl}" alt="twbs" class="coin-icon rounded-circle flex-shrink-0">
                                 <div class="ml-1">
@@ -28,21 +34,22 @@ function search() {
                                 </div>
                             </div>
                             <div class="col-3 justify-content-between">
-                                <p class="mb-0 text-center">$${(Math.round((coin.price) * 100) / 100).toFixed(2)}</p>
+                                <p class="mb-0 text-center">$${Math.round((coin.price) * 100) / 100}</p>
                             </div>
                             <div class="col-2 justify-content-between text-center">
                                 <p class="mb-0 p-1 text-white rounded `
-                        if (coin.change >= 0) {
-                            cryptoCoin += `bg-success text-right">${coin.change}%</p>
+                if(coin.change >= 0){
+                                cryptoCoin +=  `bg-success text-right">${coin.change}%</p>
                             </div>
                         </a>`;
-                        } else {
-                            cryptoCoin += `bg-danger text-right">${coin.change}%</p>
+                      }
+                      else{
+                        cryptoCoin +=  `bg-danger text-right">${coin.change}%</p>
                             </div>
                         </a>`;
-                        }
-                        // console.log(coinPrice.toFixed(2))
-                        cryptoCoin += `<div class="modal fade" id="${coin.symbol}Modal" tabindex="-1" role="dialog" aria-labelledby="${coin.symbol}Modal" aria-hidden="true">
+                      }
+
+          cryptoCoin += `<div class="modal fade" id="${coin.symbol}Modal" tabindex="-1" role="dialog" aria-labelledby="${coin.symbol}Modal" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                               <div class="modal-content rounded-6 shadow p-3">
                                 <div class="modal-header border-bottom-0 mb-3">
@@ -88,41 +95,39 @@ function search() {
                               </div>
                             </div>
                             </div>`;
+                      
+                            document.getElementById("data").innerHTML = cryptoCoin;
+                            createChart(coin.symbol+"Chart", coin.sparkline);
 
-                        document.getElementById("data").innerHTML = cryptoCoin;
-                        createChart(coin.symbol + "Chart", coin.sparkline);
+        });
+        //For Loop Ends
+        if (coinsData.length > 0) {
+          document.getElementById("data").innerHTML = cryptoCoin;
+          $('.modal').on('shown.bs.modal', function (e) {
+            let coinSymbol = e.relatedTarget.dataset.coinSymbol;
+            let coinData = JSON.parse(e.relatedTarget.dataset.coinData);
+            let labelData = Array.from({length:coinData.length});
+            labelData.fill("");
+            createChart(coinSymbol+"Chart", coinData, labelData)
+          })
+          $('.modal').on('hidden.bs.modal', function (e) {
+            myChart.destroy();
 
-                    });
-                    if (coinsData.length > 0) {
-                        document.getElementById("data").innerHTML = cryptoCoin;
-                        $('.modal').on('shown.bs.modal', function(e) {
-                            let coinSymbol = e.relatedTarget.dataset.coinSymbol;
-                            let coinData = JSON.parse(e.relatedTarget.dataset.coinData);
-                            let labelData = Array.from({
-                                length: coinData.length
-                            });
-                            labelData.fill("");
-                            createChart(coinSymbol + "Chart", coinData, labelData)
-                        })
-                        $('.modal').on('hidden.bs.modal', function(e) {
-                            myChart.destroy();
+            })
+        }
+        else{
+          document.getElementById("data").innerHTML = "";
+        }
+      });
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-                        })
-                    } else {
-                        document.getElementById("data").innerHTML = "";
-                    }
 
-                }
-            else {
-                // Show error message if the request failed
-                document.getElementById("data").innerHTML = "";
-
-            }
-        })
-.catch((error) => {
-    console.error(error);
-});
 }
+
 
 function createChart(coinname, coindata, labels){
   var ctx = document.getElementById(coinname);
